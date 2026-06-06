@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Voting System</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🔐 Secure Voting</h1>
+
+    <form action="/vote" method="post">
+        <label class="option">
+            <input type="radio" name="candidate" value="1" required>
+            Candidate A
+        </label>
+
+        <label class="option">
+            <input type="radio" name="candidate" value="0">
+            Candidate B
+        </label>
+
+        <button type="submit">Submit Vote</button>
+    </form>
+
+    {% if not voting_open %}
+    <p style="color:red; font-weight:bold;">Voting Closed</p>
+    {% endif %}
+
+    <div class="footer">
+        Homomorphic Encryption Enabled
+    </div>
+</div>
+
+</body>
+</html>

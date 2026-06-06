@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <form method="post">
+        <input name="voter_id" placeholder="Voter ID" required><br><br>
+        <input name="password" type="password" placeholder="Password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+</html>

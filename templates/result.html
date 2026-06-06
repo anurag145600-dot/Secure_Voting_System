@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>📊 Advanced Voting Dashboard</h2>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h3>Vote Distribution</h3>
+        <canvas id="voteBar"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Vote Share</h3>
+        <canvas id="votePie"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Gender Analysis</h3>
+        <canvas id="genderChart"></canvas>
+    </div>
+
+</div>
+
+<script>
+    // @ts-nocheck
+    const data = JSON.parse('{"A": {{ A|default(0) }}, "B": {{ B|default(0) }}, "male": {{ male|default(0) }}, "female": {{ female|default(0) }}}');
+
+    console.log(data); // debug
+
+    // BAR CHART
+    new Chart(document.getElementById("voteBar"), {
+        type: 'bar',
+        data: {
+            labels: ['Candidate A', 'Candidate B'],
+            datasets: [{
+                label: 'Votes Count',
+                data: [data.A, data.B],
+                backgroundColor: ['#ff4b2b', '#00c6ff']
+            }]
+        },
+        options: {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `Votes: ${ctx.raw}`
+                    }
+                }
+            }
+        }
+    });
+
+    // PIE CHART
+    new Chart(document.getElementById("votePie"), {
+        type: 'pie',
+        data: {
+            labels: ['Candidate A', 'Candidate B'],
+            datasets: [{
+                data: [data.A, data.B],
+                backgroundColor: ['#ff416c', '#36d1dc']
+            }]
+        }
+    });
+
+    // DOUGHNUT CHART
+    new Chart(document.getElementById("genderChart"), {
+        type: 'doughnut',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                data: [data.male, data.female],
+                backgroundColor: ['#36a2eb', '#ff6384']
+            }]
+        },
+        options: {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.label}: ${ctx.raw}`
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
